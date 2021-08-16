@@ -2,21 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link, useRouteMatch } from "react-router-dom";
 import { readDeck } from "../utils/api";
 
-// displays the decks in Bootstrap card view from the home page
+// displays the decks from the home page
 export default function DeckView({ removeCard }) {
     const { url } = useRouteMatch();
     const _id = Number(useParams().deckId);
     const [deck, setDeck] = useState({});
 
-    // takes the id from the URL params upon first render
-    // doesn't need anything in dependencies; will change as the url changes
+    // takes the id from the URL params upon first render; added dependency to get rid of console warnings
     useEffect(() => {
         async function getDeck() {
             const response = await readDeck(_id);
             setDeck(response);
         }
         getDeck();
-    }, []);
+    }, [_id]);
 
       // checks for deck existence before following up w/ additional logic
     if (!deck.id) return null;

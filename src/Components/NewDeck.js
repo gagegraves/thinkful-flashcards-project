@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { createDeck } from "../utils/api";
 
-// displays a form for creating a new deck, which requires name and description inputs
+// displays a page for creating a new deck
 export default function NewDeck() {
   const history = useHistory();
   const [name, setName] = useState("");

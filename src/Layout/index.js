@@ -46,7 +46,7 @@ function Layout() {
     
   }
 
-    // event handler for removing a deck
+  // event handler for removing a deck
   // this functionality exists multiple places, so decided to make it a prop
   const removeDeck = (deckId) => {
     async function remove(){

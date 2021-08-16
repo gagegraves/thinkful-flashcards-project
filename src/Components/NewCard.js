@@ -1,31 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { readDeck, createCard } from "../utils/api";
+import CardForm from "./CardForm";
 
-// displays a form for creating a new card, which requires front and back inputs
+//displays the page for adding a new card to a deck
 export default function NewCard() {
   const history = useHistory();
   const _deckId = Number(useParams().deckId);
-  const [front, setFront] = useState("");
-  const [back, setBack] = useState("");
+  const [front, setFront] = useState("Front side of card");
+  const [back, setBack] = useState("Backside of card");
   const [deck, setDeck] = useState({});
 
-  // deckId is used for the dependency array because 
-  // if the deckId changes at all, it'll change the cards that are displayed
+  // deckId is used for the dependency array because if the deckId changes, it'll change the cards that are displayed
   useEffect(() => {
     async function getDeck() {
       const response = await readDeck(_deckId);
       setDeck(response);
     }
     getDeck();
-  }, []);
+  }, [_deckId]);
 
-  // checks for deck existence before following up w/ additional logic
+  // checks for deck before following up w/ additional logic
   if (!deck.id) return null;
-
-  // event handlers for front/back buttons
-  const handleFrontInput = (evt) => setFront(evt.target.value);
-  const handleBackInput = (evt) => setBack(evt.target.value);
 
   const cardObject = {
     front: "",
@@ -63,7 +59,7 @@ export default function NewCard() {
   function handleOnSubmit(evt) {
     evt.preventDefault();
 
-    async function createNewCard(cardObj) {
+    async function createNewCard(cardObject) {
       const response = await createCard(_deckId, cardObject);
       if (response) {
         history.push(`/decks/${_deckId}`);
@@ -71,9 +67,6 @@ export default function NewCard() {
         history.go(0);
       };
     }
-
-    console.log("Submit button was clicked!: ", evt.target);
-
     cardObject.front = front;
     cardObject.back = back;
 
@@ -84,28 +77,7 @@ export default function NewCard() {
     <div className="container">
       <Nav />
       <TitleBar />
-      <div className="row">
-        <div className="col-12">
-          <form className="newCardForm" onSubmit={handleOnSubmit}>
-            <div className="form-group">
-              <label htmlFor="newCardFront">Front</label>
-              <textarea className="form-control" id="newCardFront" placeholder="Front side of card" rows="2" onChange={handleFrontInput}></textarea>
-            </div>
-            <div className="form-group">
-              <label htmlFor="newCardBack">Back</label>
-              <textarea className="form-control" id="newCardBack" placeholder="Back side of card" rows="2" onChange={handleBackInput}></textarea>
-            </div>
-            <div className="form-group">
-              <button type="button" className="btn btn-secondary btn-lg" onClick={() => history.go(-1)}>
-                Cancel
-              </button>
-              <button type="submit" className="btn btn-primary btn-lg">
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <CardForm isEdit={false} setFront={setFront} setBack={setBack} handleOnSubmit={handleOnSubmit} front={front} back={back} />
     </div>
   )
 }

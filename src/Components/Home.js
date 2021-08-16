@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 // displays 'create card' and the existent decks
 function Home({ decks, removeDeck }) {
-    // removeCard is passed as a prop from index as it is called from multiple components
+    // removeDeck is passed as a prop from index as it is called from multiple components
     const handleDeleteDeck = (deckId) => removeDeck(deckId);
 
     function CreateDeck() {

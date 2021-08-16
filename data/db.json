@@ -9,6 +9,11 @@
       "name": "deck",
       "description": "decky deck",
       "id": 5
+    },
+    {
+      "name": "test after many changes",
+      "description": "does it still work?",
+      "id": 6
     }
   ],
   "cards": [
@@ -29,6 +34,18 @@
       "back": "the back",
       "deckId": 5,
       "id": 31
+    },
+    {
+      "front": "yes!",
+      "back": "SUCCESS!",
+      "deckId": 6,
+      "id": 32
+    },
+    {
+      "front": "card 3: revenge of the cards",
+      "back": "oof\n",
+      "deckId": 5,
+      "id": 33
     }
   ]
 }

@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { updateDeck } from "../utils/api";
 import { readDeck } from "../utils/api";
 
-// displays a form requesting name and description inputs for modifying an existing card
+// displays a page for modifying an existing card
 export default function EditDeck(){
   const history = useHistory();
   const [name, setName] = useState("");
@@ -12,8 +12,6 @@ export default function EditDeck(){
 
   const _deckId = Number(useParams().deckId);
 
-  // takes the id from the URL params upon first render
-  // doesn't need anything in dependencies; will change as the url changes
   useEffect(()=>{
     async function getDeck(){
         const response = await readDeck(_deckId);
@@ -22,7 +20,7 @@ export default function EditDeck(){
         setDescription(response.description);
     }
     getDeck();
-}, []);
+}, [_deckId]);
 
 
   const handleNameChange = (evt) => setName(evt.target.value);
